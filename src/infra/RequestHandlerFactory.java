@@ -1,5 +1,6 @@
 package infra;
 
+import domain.BetManager;
 import domain.CustomerManager;
 
 public class RequestHandlerFactory {
@@ -19,7 +20,7 @@ public class RequestHandlerFactory {
         return requestHandlerFactory;
     }
 
-    public RequestHandlerStrategy getRequestHandlerStrategy(String url)
+    public RequestHandlerStrategy getRequestHandlerStrategy(String url,String body)
     {
 
         String[] strings = url.split("/");
@@ -33,6 +34,14 @@ public class RequestHandlerFactory {
             };
         else if(strings[2].contains(urlStack))
             return httpExchange -> {
+            if(strings[2].contains("stake?sessionkey="))
+            {
+                String sessionKey = strings[2].replace("","stake?sessionkey=");
+                BetManager betManager = BetManager.getInstance();
+                betManager.createBet(sessionKey,Integer.valueOf(strings[1]),Integer.valueOf(body));
+                httpExchange.sendResponseHeaders(200,0);
+
+            }
             return null;
             };
         else if(strings[2].contains(urlHighstakes))

@@ -23,11 +23,11 @@ public class CustomerManager {
 
         Customer customer = new Customer();
         customer.setId(customerId);
-        Optional<Customer> customerOptional = customerRepository.find(customer);
-        if(customerOptional.isPresent())
-             customer.setBetOfferList(customerOptional.get().getBetOfferList());
-        else
-            customer.setBetOfferList(null);
+//        Optional<Customer> customerOptional = customerRepository.find(customer);
+//        if(customerOptional.isPresent())
+//             customer.setBetOfferList(customerOptional.get().getBetOfferList());
+//        else
+//            customer.setBetOfferList(null);
         customerRepository.add(customer);
         return sessionManager.createSession(customer);
 

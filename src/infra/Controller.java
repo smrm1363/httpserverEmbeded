@@ -32,10 +32,15 @@ public class Controller {
 //            };
 
             RequestHandlerStrategy requestHandlerStrategy =
-                    RequestHandlerFactory.getInstance().getRequestHandlerStrategy(he.getRequestURI().getPath());
+                    RequestHandlerFactory.getInstance().getRequestHandlerStrategy(he.getRequestURI().getPath(),he.getRequestBody().toString());
 
 //            final OutputStream output = he.getResponseBody();
-            String returnedString = requestHandlerStrategy.handleRequest(he);
+            String returnedString = null;
+            try {
+                returnedString = requestHandlerStrategy.handleRequest(he);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             final OutputStream output = he.getResponseBody();
 
             output.write(returnedString.getBytes());

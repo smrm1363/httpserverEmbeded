@@ -3,11 +3,10 @@ package domain;
 import java.io.Serializable;
 import java.util.List;
 
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Bet implements Serializable{
     private Integer id;
-    private ConcurrentHashMap<Customer,Integer> customerBetOfferMap;
+    private LimitedConcurrentHashMap customerBetOfferMap;
 
     public Integer getId() {
         return id;
@@ -18,11 +17,11 @@ public class Bet implements Serializable{
     }
 
 
-    public ConcurrentHashMap<Customer, Integer> getCustomerBetOfferMap() {
+    public LimitedConcurrentHashMap getCustomerBetOfferMap() {
         return customerBetOfferMap;
     }
 
-    public void setCustomerBetOfferMap(ConcurrentHashMap<Customer, Integer> customerBetOfferMap) {
+    public void setCustomerBetOfferMap(LimitedConcurrentHashMap customerBetOfferMap) {
         this.customerBetOfferMap = customerBetOfferMap;
     }
 

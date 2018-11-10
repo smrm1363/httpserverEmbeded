@@ -34,12 +34,11 @@ public class BetManager {
         if(betOptional.isPresent())
              bet.setCustomerBetOfferMap(betOptional.get().getCustomerBetOfferMap());
         else
-            bet.setCustomerBetOfferMap(new ConcurrentHashMap<>());
+            bet.setCustomerBetOfferMap(new LimitedConcurrentHashMap());
         Optional<Integer> integerOptional = Optional.ofNullable(bet.getCustomerBetOfferMap().get(customer));
         final Integer[] maxStack = {stack};
         integerOptional.ifPresent(lastValue -> maxStack[0] =lastValue.compareTo(maxStack[0])>0? lastValue :maxStack[0]);
         bet.getCustomerBetOfferMap().put(customer,maxStack[0]);
-        reduceMapToTop20(bet.getCustomerBetOfferMap());
         betRepository.add(bet);
 
     }
@@ -58,12 +57,6 @@ public class BetManager {
          */
         return null;
     }
-    private void reduceMapToTop20(ConcurrentHashMap hashMap)
-    {
-        /**
-         * {@link TODO}
-         */
 
-    }
 
 }

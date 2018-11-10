@@ -7,5 +7,5 @@ import java.io.IOException;
 
 @FunctionalInterface
 public interface RequestHandlerStrategy {
-    String handleRequest(HttpExchange httpExchange) throws IOException;
+    String handleRequest(HttpExchange httpExchange) throws Exception;
 }
