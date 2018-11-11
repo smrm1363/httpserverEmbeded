@@ -20,7 +20,8 @@ public class LimitedConcurrentHashMap extends ConcurrentHashMap<Customer,Integer
             /**
              * Because we want only the top 20 values, we delete the least one and add the higher offer
              */
-           Entry<Customer,Integer> entry= entrySet().stream().min(Map.Entry.comparingByValue(Comparator.comparingInt(value1 -> value))).get();
+           Entry<Customer,Integer> entry= entrySet().stream()
+                   .min(Map.Entry.comparingByValue((o1, o2) -> o1.compareTo(o2))).get();
            if(value>entry.getValue())
                remove(entry.getKey());
            else

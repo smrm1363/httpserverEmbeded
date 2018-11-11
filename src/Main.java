@@ -12,6 +12,6 @@ public class Main {
         controller.setOnHttpServer(server);
 
         server.start();
-        System.out.println("111");
+        System.out.println("The project started");
     }
 }

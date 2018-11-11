@@ -86,7 +86,7 @@ public class BetManager {
                  * Generating the output string order by offers values
                  */
                 bet.getCustomerBetOfferMap().entrySet().stream()
-                        .sorted((o1, o2) -> o1.getValue().compareTo(o2.getValue()))
+                        .sorted((o1, o2) -> o2.getValue().compareTo(o1.getValue()))
                         .forEach(customerIntegerEntry -> stringBuilder
                                 .append(","+customerIntegerEntry.getKey().getId()+"="+customerIntegerEntry.getValue()));
                 stringBuilder.deleteCharAt(0);
