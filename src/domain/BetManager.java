@@ -42,6 +42,24 @@ public class BetManager {
         betRepository.add(bet);
 
     }
+    public String getHighestStack(Integer betId) throws Exception {
+        Bet bet = new Bet();
+        bet.setId(betId);
+        bet = betRepository.find(bet).orElse(null);
+        StringBuilder stringBuilder = new StringBuilder();
+        if(bet!=null)
+        {
+            if((bet.getCustomerBetOfferMap().size() >0))
+            {
+                bet.getCustomerBetOfferMap().entrySet().stream()
+                        .sorted((o1, o2) -> o1.getValue().compareTo(o2.getValue()))
+                        .forEach(customerIntegerEntry -> stringBuilder
+                                .append(","+customerIntegerEntry.getKey().getId()+"="+customerIntegerEntry.getValue()));
+                stringBuilder.deleteCharAt(0);
+            }
+        }
+        return stringBuilder.toString();
+    }
     private Customer hasValidSessionForCustomer(String sessionId)
     {
         CustomerSession customerSession = sessionManager.getSessionMap().get(sessionId);

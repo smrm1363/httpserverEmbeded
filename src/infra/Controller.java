@@ -3,8 +3,14 @@ package infra;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 import domain.CustomerManager;
+import jdk.Exported;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.util.stream.Collectors;
 
 public class Controller {
     private static Controller controller;
@@ -30,9 +36,13 @@ public class Controller {
 //                httpExchange.sendResponseHeaders(200, 6);
 //                return "OOOmad";
 //            };
-
+            InputStream inputStream = he.getRequestBody();
+            String readedBody = null;
+            try (BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream))) {
+                readedBody= buffer.lines().collect(Collectors.joining("\n"));
+            }
             RequestHandlerStrategy requestHandlerStrategy =
-                    RequestHandlerFactory.getInstance().getRequestHandlerStrategy(he.getRequestURI().getPath(),he.getRequestBody().toString());
+                    RequestHandlerFactory.getInstance().getRequestHandlerStrategy(he.getRequestURI().getPath(),readedBody,he.getRequestURI().getQuery());
 
 //            final OutputStream output = he.getResponseBody();
             String returnedString = null;

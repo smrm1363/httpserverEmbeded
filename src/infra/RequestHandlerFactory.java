@@ -20,33 +20,36 @@ public class RequestHandlerFactory {
         return requestHandlerFactory;
     }
 
-    public RequestHandlerStrategy getRequestHandlerStrategy(String url,String body)
+    public RequestHandlerStrategy getRequestHandlerStrategy(String url,String body,String quersyParameters)
     {
 
         String[] strings = url.split("/");
 
-        if(strings[2].contains(urlSession))
+        if(strings[2].equalsIgnoreCase(urlSession))
             return httpExchange -> {
                 CustomerManager customerManager = CustomerManager.getInstance();
                 String response = customerManager.createCustomer(Integer.valueOf(strings[1]));
                 httpExchange.sendResponseHeaders(200, response.length());
                 return response;
             };
-        else if(strings[2].contains(urlStack))
+        else if(strings[2].equalsIgnoreCase(urlStack))
             return httpExchange -> {
-            if(strings[2].contains("stake?sessionkey="))
-            {
-                String sessionKey = strings[2].replace("","stake?sessionkey=");
+//            if(strings[2].contains(urlStack))
+//            {
+                String sessionKey = quersyParameters.replace("sessionkey=","");
                 BetManager betManager = BetManager.getInstance();
                 betManager.createBet(sessionKey,Integer.valueOf(strings[1]),Integer.valueOf(body));
                 httpExchange.sendResponseHeaders(200,0);
 
-            }
-            return null;
+//            }
+            return "";
             };
-        else if(strings[2].contains(urlHighstakes))
+        else if(strings[2].equalsIgnoreCase(urlHighstakes))
             return httpExchange -> {
-            return null;
+                BetManager betManager = BetManager.getInstance();
+                String response = betManager.getHighestStack(Integer.valueOf(strings[1]));
+                httpExchange.sendResponseHeaders(200, response.length());
+                return response;
             };
         return null;
     }
