@@ -1,10 +1,7 @@
-import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
-import domain.CustomerManager;
 import infra.Controller;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
 public class Main {

@@ -1,11 +1,12 @@
 package domain;
 
 import java.io.Serializable;
-import java.util.List;
 
+/**
+ * This is our Customer entity
+ */
 public class Customer implements Serializable {
     private Integer id;
-  //  private List<CustomerBetOffer> betOfferList;
     public Integer getId() {
         return id;
     }
@@ -14,13 +15,7 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
-//    public List<CustomerBetOffer> getBetOfferList() {
-//        return betOfferList;
-//    }
-//
-//    public void setBetOfferList(List<CustomerBetOffer> betOfferList) {
-//        this.betOfferList = betOfferList;
-//    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -29,8 +24,7 @@ public class Customer implements Serializable {
 
         Customer customer = (Customer) o;
         return id.equals(customer.id);
-        //if (!id.equals(customer.id)) return false;
-       // return betOfferList != null ? betOfferList.equals(customer.betOfferList) : customer.betOfferList == null;
+
     }
 
     @Override

@@ -1,11 +1,15 @@
 package domain;
 
 import java.io.Serializable;
-import java.util.List;
 
-
+/**
+ * This is Bet entity class
+ */
 public class Bet implements Serializable{
     private Integer id;
+    /**
+     * This is a custom Map which has limited spaces. It keeps bet offer of customers
+     */
     private LimitedConcurrentHashMap customerBetOfferMap;
 
     public Integer getId() {

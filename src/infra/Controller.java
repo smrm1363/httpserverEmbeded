@@ -2,16 +2,16 @@ package infra;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
-import domain.CustomerManager;
-import jdk.Exported;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
 import java.util.stream.Collectors;
 
+/**
+ * This is our controller. This is a Singleton class
+ */
 public class Controller {
     private static Controller controller;
 
@@ -19,6 +19,10 @@ public class Controller {
 
     }
 
+    /**
+     *
+     * @return a singleton instance of Controller
+     */
     public static Controller getInstance()
     {
         if(controller == null)
@@ -27,24 +31,25 @@ public class Controller {
     }
     public void setOnHttpServer(HttpServer server)
     {
-        String payload = "duke";
+
         HttpContext context = server.createContext("/");
         context.setHandler((he) -> {
-//            String[] strings = he.getRequestURI().getPath().split("/");
 
-//            RequestHandlerStrategy requestHandlerStrategy = httpExchange -> {
-//                httpExchange.sendResponseHeaders(200, 6);
-//                return "OOOmad";
-//            };
             InputStream inputStream = he.getRequestBody();
             String readedBody = null;
+            /**
+             * Getting the body if it is existed
+             */
             try (BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream))) {
                 readedBody= buffer.lines().collect(Collectors.joining("\n"));
             }
+
+            /**
+             * Getting an instance of RequestHandlerStrategy from RequestHandlerFactory
+             */
             RequestHandlerStrategy requestHandlerStrategy =
                     RequestHandlerFactory.getInstance().getRequestHandlerStrategy(he.getRequestURI().getPath(),readedBody,he.getRequestURI().getQuery());
 
-//            final OutputStream output = he.getResponseBody();
             String returnedString = null;
             try {
                 returnedString = requestHandlerStrategy.handleRequest(he);
@@ -56,9 +61,7 @@ public class Controller {
             output.write(returnedString.getBytes());
             output.flush();
             he.close();
-//            CustomerManager customerManager = CustomerManager.getInstance();
-//
-//            customerManager.createCustomer(Integer.valueOf(strings[strings.length-1]));
+
 
         });
     }

@@ -2,6 +2,9 @@ package domain;
 
 import java.util.Map;
 
+/**
+ * This is a repository of Customer. This is Singleton
+ */
 public class CustomerRepository extends AbstractRepository<Customer>{
 
     private static CustomerRepository customerRepository;

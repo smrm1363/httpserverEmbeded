@@ -2,8 +2,11 @@ package domain;
 
 import java.time.LocalTime;
 
+/**
+ * This is an entity for our sessions
+ */
 public class CustomerSession {
-    ;
+
     private LocalTime startSessionTime;
     private Customer customer;
 
