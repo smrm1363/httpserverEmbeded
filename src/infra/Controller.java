@@ -51,17 +51,22 @@ public class Controller {
                     RequestHandlerFactory.getInstance().getRequestHandlerStrategy(he.getRequestURI().getPath(),readedBody,he.getRequestURI().getQuery());
 
             String returnedString = null;
+             OutputStream output = he.getResponseBody();
             try {
                 returnedString = requestHandlerStrategy.handleRequest(he);
             } catch (Exception e) {
+                /**
+                 * Returning error message
+                 */
                 e.printStackTrace();
+                he.sendResponseHeaders(400,e.getMessage().length());
+                returnedString = e.getMessage();
             }
-            final OutputStream output = he.getResponseBody();
-
-            output.write(returnedString.getBytes());
-            output.flush();
-            he.close();
-
+            finally {
+                output.write(returnedString.getBytes());
+                output.flush();
+                he.close();
+            }
 
         });
     }

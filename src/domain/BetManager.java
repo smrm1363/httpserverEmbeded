@@ -42,7 +42,7 @@ public class BetManager {
      * @throws Exception when the session Id is not valid
      */
     public void createBet(String sessionId,Integer betId,Integer stack) throws Exception {
-        Customer customer = hasValidSessionForCustomer(sessionId);
+        Customer customer = sessionManager.hasValidSessionForCustomer(sessionId);
         if(customer == null)
             throw new Exception("There is not any valid session");
         Bet bet = new Bet();
@@ -95,26 +95,7 @@ public class BetManager {
         return stringBuilder.toString();
     }
 
-    /**
-     * Control if the customer has valid session
-     * @param sessionId
-     * @return founded customer
-     */
-    private Customer hasValidSessionForCustomer(String sessionId)
-    {
-        CustomerSession customerSession = sessionManager.getSessionMap().get(sessionId);
-        if(customerSession != null)
-        {
-            if(customerSession.getStartSessionTime().isBefore(LocalTime.now().minusMinutes(10)))
-                sessionManager.getSessionMap().remove(sessionId);
-            else
-                return customerSession.getCustomer();
-        }
-        /**
-         * Means there is no session or session is timed out
-         */
-        return null;
-    }
+
 
 
 }

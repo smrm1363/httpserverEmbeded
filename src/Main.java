@@ -7,7 +7,7 @@ import java.net.InetSocketAddress;
 public class Main {
     public static void main(String[] args) throws IOException {
         String payload = "duke";
-        HttpServer server = HttpServer.create(new InetSocketAddress(4250), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(8001), 0);
         Controller controller=Controller.getInstance();
         controller.setOnHttpServer(server);
 
